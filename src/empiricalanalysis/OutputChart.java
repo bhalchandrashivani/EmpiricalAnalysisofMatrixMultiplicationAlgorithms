@@ -5,13 +5,17 @@
  */
 package empiricalanalysis;
 
-import java.awt.BorderLayout;
+
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
+
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+<<<<<<< HEAD
+=======
+
+>>>>>>> fd3ae4ecdbd90ca47300a570f6e8c5836511d50f
 
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
