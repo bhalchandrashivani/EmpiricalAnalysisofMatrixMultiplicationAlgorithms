@@ -20,10 +20,9 @@ import org.jfree.data.xy.XYSeriesCollection;
  *
  * @author shivani bhalchandra
  */
-public class XYLineChartExample extends JFrame{
-    
-    
-    public void XYLineChartExample(XYSeriesCollection dataset ) {
+public class XYLineChartExample extends JFrame {
+
+    public void XYLineChartExample(XYSeriesCollection dataset) {
 
         JPanel chartPanel = createChartPanel(dataset);
         add(chartPanel, BorderLayout.CENTER);
@@ -32,7 +31,7 @@ public class XYLineChartExample extends JFrame{
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setVisible(true);
-  
+
     }
 
     private JPanel createChartPanel(XYSeriesCollection li) {
@@ -44,18 +43,17 @@ public class XYLineChartExample extends JFrame{
         String yAxisLabel = "time in ms";
 
         XYSeriesCollection dataset = li;
-       // System.out.println("tesst count " + dataset.getSeriesCount());
-        
+        // System.out.println("tesst count " + dataset.getSeriesCount());
+
         //XYDataset dataset = createDataset(li);
         JFreeChart chart = ChartFactory.createXYLineChart(chartTitle, xAxisLabel, yAxisLabel, dataset);
         XYPlot plot = chart.getXYPlot();
         XYLineAndShapeRenderer renderer = new XYLineAndShapeRenderer();
         plot.setRenderer(renderer);
-        
+
         return new ChartPanel(chart);
     }
 
-    
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
@@ -64,7 +62,5 @@ public class XYLineChartExample extends JFrame{
             }
         });
     }
-    
-    
-    
+
 }
