@@ -10,7 +10,7 @@ package empiricalanalysis;
  * @author Abhishek Dongare
  */
 public class ImprovedStrassen{
-
+ //This method will remove the extra padding we added to make the any given matrix into a factor of 2
     public int[][] SendMatrixForImprovedStrassen(int[][] A, int[][] B, int orignalLength, int assumedBreakPoint) {
         int D[][] = new int[orignalLength][orignalLength];
 
@@ -31,13 +31,13 @@ public class ImprovedStrassen{
             C[0][0] = M1[0][0] * M2[0][0];
             return C;
         }
-
+// this method recursively divides the matrix by a factor of /2
         int a[][] = new int[halvedLength][halvedLength];
         int d[][] = new int[halvedLength][halvedLength];
 
         int e[][] = new int[halvedLength][halvedLength];
         int h[][] = new int[halvedLength][halvedLength];
-
+        //
         int X1[][] = new int[halvedLength][halvedLength];
         int X2[][] = new int[halvedLength][halvedLength];
         int X3[][] = new int[halvedLength][halvedLength];
@@ -48,7 +48,7 @@ public class ImprovedStrassen{
         int X8[][] = new int[halvedLength][halvedLength];
         int X9[][] = new int[halvedLength][halvedLength];
         int X10[][] = new int[halvedLength][halvedLength];
-
+   //Divide and conquer is initiated.
         for (int i = 0; i < halvedLength; i++) {
             for (int j = 0; j < halvedLength; j++) {
                 a[i][j] = M1[i][j];
@@ -77,7 +77,7 @@ public class ImprovedStrassen{
         int Y5[][];// = strassen(X5, X6, halvedLength/2);
         int Y6[][];// = strassen(X7, X8, halvedLength/2);
         int Y7[][];// = strassen(X9, X10, halvedLength/2);
-
+//This breakpoint is the size of the matrix after which the Strassen breakdown stops, and the matrices are multiplied using traditional multiplication method
         if (M1.length <= asumedBreakPoint) {
             TraditionalMatrixMultiplication tmm = new TraditionalMatrixMultiplication();
             Y1 = tmm.MultiplyMatrixTraditionally(a, X1);
