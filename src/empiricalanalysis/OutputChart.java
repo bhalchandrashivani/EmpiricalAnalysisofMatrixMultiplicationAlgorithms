@@ -12,28 +12,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.scene.Scene;
-import javafx.scene.chart.NumberAxis;
-import javafx.scene.chart.XYChart;
-import javafx.stage.Stage;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import org.jfree.chart.ChartFactory;
-import org.jfree.chart.ChartFrame;
-import org.jfree.chart.ChartPanel;
-import org.jfree.chart.JFreeChart;
-
-import org.jfree.chart.plot.PlotOrientation;
-import org.jfree.chart.plot.XYPlot;
-import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
-import org.jfree.data.xy.XYDataset;
 
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 
 /**
  *
- * @author kaustubhspande
+ * @author shivani bhalchandra
  */
 public class OutputChart extends javax.swing.JFrame {
 
@@ -89,14 +74,14 @@ public class OutputChart extends javax.swing.JFrame {
 
         EmpiricalAnalysis emp = new EmpiricalAnalysis();
         try {
-            
+
             emp.start();
 
             Map<Integer, Long> tmap = emp.getTradmap();
-            System.out.println("tmap" + tmap.size());
+            //System.out.println("tmap" + tmap.size());
 
             Map<Integer, Long> pureStrasmap = emp.getPureStrasmap();
-            System.out.println("pireStmap" + pureStrasmap.size());
+            //System.out.println("pireStmap" + pureStrasmap.size());
 
             List<Map> outlist = emp.getMaplist();
             XYSeriesCollection dataset2 = createDataset(outlist);
@@ -134,7 +119,7 @@ public class OutputChart extends javax.swing.JFrame {
         for (int i = 0; i < maplist.size(); i++) {
             if (i == 0) {
                 serieslist[i] = new XYSeries("Trad");
-                
+
             } else {
                 serieslist[i] = new XYSeries("BP " + breappoint);
                 breappoint *= 2;
@@ -144,7 +129,7 @@ public class OutputChart extends javax.swing.JFrame {
                 serieslist[i].add(map.getKey(), map.getValue());
             }
             dataset.addSeries(serieslist[i]);
-            
+
         }
 
         return dataset;

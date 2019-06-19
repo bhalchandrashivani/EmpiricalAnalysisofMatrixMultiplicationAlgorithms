@@ -12,11 +12,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
-import javafx.stage.Stage;
 
 /**
  *
- * @author kaustubhspande
+ * @author shivani bhalchandra
  */
 public class EmpiricalAnalysis {
 
@@ -98,30 +97,31 @@ public class EmpiricalAnalysis {
             M2 = applyPadding(M2, required);
         }
 
-        //calculate strassen
+        //calculate pure strassen
         long startTime2 = System.currentTimeMillis();
-        StrassenMatrixMutliplication smm = new StrassenMatrixMutliplication();
-        int res2[][] = smm.SendMatrixForStrassen(M1, M2, result.length, -1);
+        OriginalStrassen Ds = new OriginalStrassen();
+        int res2[][] = Ds.SendMatrixForStrassen(M1, M2, result.length);
         long stoptime = System.currentTimeMillis() - startTime2;
         System.out.println("\n Matrix multiplication using Strassen's Algorithm: \n Time Taken: " + stoptime + " ns\n");
         printMatrix(res2);
 
-        //improved
+        //improved strassen
         long startTime3 = System.currentTimeMillis();
         ImprovedStrassen imp = new ImprovedStrassen();
         int res3[][] = imp.SendMatrixForImprovedStrassen(M1, M2, result.length, -1);
         long stoptime3 = System.currentTimeMillis() - startTime3;
-        System.out.println("\n Matrix multiplication using Improved Strassen's Algorithm: \n Time Taken: " + stoptime + " ns\n");
+        System.out.println("\n Matrix multiplication using Improved Strassen's Algorithm: \n Time Taken: " + stoptime3 + " ns\n");
         printMatrix(res3);
 
-        //calculating breakpoint
+        //calculating breakpoint for pure vs traditional
         BreakpointCalculator bpc = new BreakpointCalculator();
         int calulatedbreakPoint = bpc.calculateBreakPoint();
         tradmap = bpc.getTradmap();
         pureStrasmap = bpc.getPureStrasmap();
-        System.out.println("calulatedbreakPoint" + calulatedbreakPoint);
+        System.out.println("\n The evaluation for pure vs traditional completed" + calulatedbreakPoint);
 
-        System.out.println("Improved cal");
+        //calculating breakpoint for improved vs traditional
+        System.out.println("\n Improved Strassen calculations");
         int impbpc = bpc.impStrassenBP();
         maplist.add(tradmap2 = bpc.getTradmap2());
         maplist.add(map16 = bpc.getMap16());
@@ -129,13 +129,9 @@ public class EmpiricalAnalysis {
         maplist.add(map64 = bpc.getMap64());
         maplist.add(map128 = bpc.getMap128());
         maplist.add(map256 = bpc.getMap256());
-        maplist.add(map512 = bpc.getMap512());
-        
-        
-        System.out.println("calulatedbreakPoint 2 " + impbpc);
-        
-        
-
+        maplist.add(map512 = bpc.getMap512());            
+        System.out.println("\n The evaluation for pure vs traditional completed ");
+        System.out.println("\n Based on the analysis of the chart ,the final break point needs to be 64");
     }
 
     //method to print the given matrix

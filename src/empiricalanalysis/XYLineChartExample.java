@@ -6,8 +6,6 @@
 package empiricalanalysis;
 
 import java.awt.BorderLayout;
-import java.util.List;
-import java.util.Map;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
@@ -16,8 +14,6 @@ import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
-import org.jfree.data.xy.XYDataset;
-import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 
 /**
@@ -36,12 +32,7 @@ public class XYLineChartExample extends JFrame{
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setVisible(true);
-        
-        
-        
-        
-        
-        
+  
     }
 
     private JPanel createChartPanel(XYSeriesCollection li) {
@@ -53,7 +44,7 @@ public class XYLineChartExample extends JFrame{
         String yAxisLabel = "time in ms";
 
         XYSeriesCollection dataset = li;
-        System.out.println("tesst count " + dataset.getSeriesCount());
+       // System.out.println("tesst count " + dataset.getSeriesCount());
         
         //XYDataset dataset = createDataset(li);
         JFreeChart chart = ChartFactory.createXYLineChart(chartTitle, xAxisLabel, yAxisLabel, dataset);

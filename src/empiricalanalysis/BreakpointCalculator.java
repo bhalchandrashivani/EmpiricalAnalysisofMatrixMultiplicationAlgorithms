@@ -12,7 +12,6 @@ import java.util.LinkedList;
 import java.util.Map;
 import java.util.Queue;
 import java.util.Random;
-import javafx.util.Pair;
 
 /**
  *
@@ -46,13 +45,12 @@ public class BreakpointCalculator {
     public int calculateBreakPoint() {
 
         TraditionalMatrixMultiplication tmm = new TraditionalMatrixMultiplication();
-        StrassenMatrixMutliplication smm = new StrassenMatrixMutliplication();
-        DifferentStrassen ds = new DifferentStrassen();
+        
+        OriginalStrassen ds = new OriginalStrassen();
         int size = 1;
         Random rand = new Random();
 
-        String header1 = String.format("%16s", "N") + String.format("%13s", "Trad") + String.format("%13s", "16") + String.format("%13s", "32") + String.format("%13s", "64") + String.format("%13s", "128") + String.format("%13s", "256") + String.format("%13s", "512");
-        String header2 = String.format("%16s", "N") + String.format("%13s", "Trad") + String.format("%18s", "PureStrassen");
+        String header2 = String.format("%13s", "N") + String.format("%13s", "Trad") + String.format("%18s", "PureStrassen");
         System.out.println(String.format("%140s\n", " ").replace(" ", "_"));
         System.out.println(header2);
         System.out.println(String.format("%140s\n", " ").replace(" ", "_"));
@@ -61,47 +59,44 @@ public class BreakpointCalculator {
 
             size *= 2;
 
-            int A[][] = new int[size][size];
-            int B[][] = new int[size][size];
-            int C[][];
-            for (int i = 0; i < A.length; i++) {
-                for (int j = 0; j < A.length; j++) {
-                    A[i][j] = rand.nextInt(200) + 100;
-                    B[i][j] = rand.nextInt(200) + 100;
+            int M1[][] = new int[size][size];
+            int M2[][] = new int[size][size];
+            int res[][];
+            for (int i = 0; i < M1.length; i++) {
+                for (int j = 0; j < M1.length; j++) {
+                    M1[i][j] = rand.nextInt(200) + 100;
+                    M2[i][j] = rand.nextInt(200) + 100;
                 }
             }
 
-            String readings = String.format("%10d units", size);
+            String OutputValues = String.format("%10d units", size);
             long starttime1 = System.currentTimeMillis();
             if (size <= 2048) {
 
-                C = tmm.MultiplyMatrixTraditionally(A, B);
-
-                long stoptime1 = System.currentTimeMillis() - starttime1;
+               res = tmm.MultiplyMatrixTraditionally(M1, M2);
+               long stoptime1 = System.currentTimeMillis() - starttime1;
                 String tradTime = String.format("%10d ms", stoptime1);
-
                 tradmap.put(size, stoptime1);
-
-                readings += tradTime;
+                OutputValues += tradTime;
             }
 
-            //int assumedBreakPoint = 16;
-            int requiredLength = extraLength(A.length);
-            if (requiredLength > A.length) {
-                A = applyPadding(A, requiredLength);
-                B = applyPadding(B, requiredLength);
+          
+            int requiredLength = extraLength(M1.length);
+            if (requiredLength > M1.length) {
+                M1 = applyPadding(M1, requiredLength);
+                M2 = applyPadding(M2, requiredLength);
             }
 
             long starttime2 = System.currentTimeMillis();
-            C = ds.SendMatrixForStrassen(A, B, size);
+            res = ds.SendMatrixForStrassen(M1, M2, size);
             long stoptime2 = System.currentTimeMillis() - starttime2;
             String time = String.format("%10d ms", stoptime2);
             pureStrasmap.put(size, stoptime2);
-            readings += time;
-            System.out.println(readings);
+            OutputValues += time;
+            System.out.println(OutputValues);
         }
         int breakPoint = 0;
-        return breakPoint / 5;
+        return breakPoint;
 
     }
 
@@ -119,81 +114,74 @@ public class BreakpointCalculator {
         System.out.println(header);
         System.out.println(String.format("%140s\n", " ").replace(" ", "_"));
 
-        while (size <= 512) {
+        while (size <= 1024) {
 
             size *= 2;
-            int A[][] = new int[size][size];
-            int B[][] = new int[size][size];
-            int C[][];
-            for (int i = 0; i < A.length; i++) {
-                for (int j = 0; j < A.length; j++) {
-                    A[i][j] = rand.nextInt(200) + 100;
-                    B[i][j] = rand.nextInt(200) + 100;
+            int M1[][] = new int[size][size];
+            int M2[][] = new int[size][size];
+            int res[][];
+            for (int i = 0; i < M1.length; i++) {
+                for (int j = 0; j < M1.length; j++) {
+                    M1[i][j] = rand.nextInt(200) + 100;
+                    M2[i][j] = rand.nextInt(200) + 100;
                 }
             }
 
-            String readings = String.format("%10d units", size);
+            String OutputValues = String.format("%10d units", size);
             long nanos = System.currentTimeMillis();
             if (size <= 2048) {
-                C = tmm.MultiplyMatrixTraditionally(A, B);
+                res = tmm.MultiplyMatrixTraditionally(M1, M2);
                 long t1 = System.currentTimeMillis() - nanos;
                 String tradTime = String.format("%10d ms", t1);
                 tradmap2.put(size, t1);
-                readings += tradTime;
+                OutputValues += tradTime;
             } else {
-                String tradTime = String.format("%10s   ", "NA");
-                readings += tradTime;
+                String tradTime = String.format("%10s   ", "NM1");
+                OutputValues += tradTime;
             }
 
             int assumedBreakPoint = 16;
-            int requiredLength = extraLength(A.length);
-            if (requiredLength > A.length) {
-                A = applyPadding(A, requiredLength);
-                B = applyPadding(B, requiredLength);
+            int requiredLength = extraLength(M1.length);
+            if (requiredLength > M1.length) {
+                M1 = applyPadding(M1, requiredLength);
+                M2 = applyPadding(M2, requiredLength);
             }
             while (assumedBreakPoint < 1024) {
                 nanos = System.currentTimeMillis();
-                C = imp.SendMatrixForImprovedStrassen(A, B, size, assumedBreakPoint);
-                long t2 = System.currentTimeMillis() - nanos;
-                String time = String.format("%10d ms", t2);
+                res = imp.SendMatrixForImprovedStrassen(M1, M2, size, assumedBreakPoint);
+                long timeRequired = System.currentTimeMillis() - nanos;
+                String time = String.format("%10d ms", timeRequired);
+
                 switch (assumedBreakPoint) {
-                    
+                   
                     case 16:
-                        map16.put(size, t2);
-                        break; // break is optional
-
+                        map16.put(size, timeRequired);
+                        break;
                     case 32:
-                         map32.put(size, t2);
-                        break; // break is optional
-
+                         map32.put(size, timeRequired);
+                        break; 
                     case 64:
-                         map64.put(size, t2);
-                        break; // break is optional
-
+                         map64.put(size, timeRequired);
+                        break; 
                     case 128:
-                         map128.put(size, t2);
-                        break; // break is optional
-
+                         map128.put(size, timeRequired);
+                        break; 
                     case 256:
-                         map256.put(size, t2);
-                        break; // break is optional
+                         map256.put(size, timeRequired);
+                        break; 
 
                     case 512:
-                         map512.put(size, t2);
-                        break; // break is optional
-
-                    default:
-                       
+                         map512.put(size, timeRequired);
+                        break; 
+                    default:                       
                 }
-
-                readings += time;
+                OutputValues += time;
                 assumedBreakPoint *= 2;
             }
-            System.out.println(readings);
+            System.out.println(OutputValues);
         }
-
         int breakPoint = 0;
-        return breakPoint / 5;
+        return breakPoint;
 
     }
 

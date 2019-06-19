@@ -7,9 +7,9 @@ package empiricalanalysis;
 
 /**
  *
- * @author kaustubhspande
+ * @author shivani bhalchandra
  */
-public class DifferentStrassen {
+public class OriginalStrassen {
     
     public int[][] SendMatrixForStrassen(int[][] A, int[][] B, int orignalLength){
 		int D[][] = new int[orignalLength][orignalLength];

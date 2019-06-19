@@ -7,6 +7,8 @@ package empiricalanalysis;
 
 public class TraditionalMatrixMultiplication {
     
+    //method to multiply two matrix using traditional method
+    //O(N^2)
     public int[][] MultiplyMatrixTraditionally(int[][] m1, int[][] m2){
         int out[][] = new int[m1.length][m1.length];
         for(int i = 0; i < m1.length; i++){
