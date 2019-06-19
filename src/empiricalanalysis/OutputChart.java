@@ -75,36 +75,35 @@ public class OutputChart extends javax.swing.JFrame {
 
         EmpiricalAnalysis emp = new EmpiricalAnalysis();
         try {
-
+            //start the analysis
             emp.start();
-
+            //data for each size of matrix multiplied traditionally
             Map<Integer, Long> tmap = emp.getTradmap();
             //System.out.println("tmap" + tmap.size());
 
+            //data for each size of matrix multiplied using original strassen
             Map<Integer, Long> pureStrasmap = emp.getPureStrasmap();
             //System.out.println("pireStmap" + pureStrasmap.size());
 
+            //all maps of diffrent breakpoints tested against all sizes of matrix
+            //for first chart
             List<Map> outlist = emp.getMaplist();
             XYSeriesCollection dataset2 = createDataset(outlist);
-
             XYSeriesCollection dataset1 = new XYSeriesCollection();
             XYSeries series1 = new XYSeries("Traditional ");
             XYSeries series2 = new XYSeries("Pure Strassen");
-
             for (Map.Entry<Integer, Long> map : tmap.entrySet()) {
                 series1.add(map.getKey(), map.getValue());
             }
-
             for (Map.Entry<Integer, Long> map : pureStrasmap.entrySet()) {
                 series2.add(map.getKey(), map.getValue());
-
             }
-
             dataset1.addSeries(series1);
             dataset1.addSeries(series2);
 
+            //for second chart
             XYLineChartExample xs = new XYLineChartExample();
-
+            //outputing the chart by creating the dataset for different breakpointss
             xs.XYLineChartExample(dataset2);
 
         } catch (FileNotFoundException ex) {
@@ -112,6 +111,7 @@ public class OutputChart extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_getChartActionPerformed
 
+    //creating dataset for different breakpoints
     private XYSeriesCollection createDataset(List<Map> maplist) {
 
         XYSeriesCollection dataset = new XYSeriesCollection();
