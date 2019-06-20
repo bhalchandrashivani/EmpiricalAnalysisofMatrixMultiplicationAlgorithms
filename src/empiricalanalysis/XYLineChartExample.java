@@ -53,6 +53,26 @@ public class XYLineChartExample extends JFrame {
 
         return new ChartPanel(chart);
     }
+    
+     public JFreeChart createChartTest(XYSeriesCollection li) {
+        // creates a line chart object
+        // returns the chart panel
+
+        String chartTitle = " Movement Chart";
+        String xAxisLabel = "Matrix Size";
+        String yAxisLabel = "time in ms";
+
+        XYSeriesCollection dataset = li;
+        // System.out.println("tesst count " + dataset.getSeriesCount());
+
+        //XYDataset dataset = createDataset(li);
+        JFreeChart chart = ChartFactory.createXYLineChart(chartTitle, xAxisLabel, yAxisLabel, dataset);
+        XYPlot plot = chart.getXYPlot();
+        XYLineAndShapeRenderer renderer = new XYLineAndShapeRenderer();
+        plot.setRenderer(renderer);
+
+        return  chart;
+    }
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
