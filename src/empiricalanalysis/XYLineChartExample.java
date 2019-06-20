@@ -18,6 +18,7 @@ import org.jfree.data.xy.XYSeriesCollection;
 
 /**
  *
+ *
  * @author shivani bhalchandra
  */
 public class XYLineChartExample extends JFrame {
@@ -63,9 +64,7 @@ public class XYLineChartExample extends JFrame {
         String yAxisLabel = "time in ms";
 
         XYSeriesCollection dataset = li;
-        // System.out.println("tesst count " + dataset.getSeriesCount());
-
-        //XYDataset dataset = createDataset(li);
+       
         JFreeChart chart = ChartFactory.createXYLineChart(chartTitle, xAxisLabel, yAxisLabel, dataset);
         XYPlot plot = chart.getXYPlot();
         XYLineAndShapeRenderer renderer = new XYLineAndShapeRenderer();
